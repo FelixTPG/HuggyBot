@@ -10,6 +10,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Main {
 
-    @Getter private static final Color defaultColor = new Color(255, 146, 89);
+    @Getter private static final Color defaultColor = new Color(0, 170, 213);
     public static String PREFIX = "h!";
 
     @Getter private static JDA jda;
@@ -68,7 +69,11 @@ public class Main {
     public static EmbedBuilder getNewEmbed() {
         return new EmbedBuilder()
                 .setColor(getDefaultColor())
-                .setFooter("Huggy ❤️ • " + Var.VERSION, jda.getSelfUser().getAvatarUrl());
+                .setFooter("Huggy 🚀 • " + Var.VERSION, jda.getSelfUser().getAvatarUrl());
+    }
+
+    public static EmbedBuilder getNewEmbed(Guild guild) {
+        return getNewEmbed().setColor((guild == null || guild.isDetached()) ? getDefaultColor() : guild.getSelfMember().getColor());
     }
 
 }

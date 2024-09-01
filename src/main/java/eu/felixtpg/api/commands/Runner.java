@@ -89,7 +89,7 @@ public class Runner extends ListenerAdapter {
                     CommandRuntime commandInstance = commandClass.getDeclaredConstructor().newInstance();
 
                     // Den neuen BotCommand erstellen
-                    new BotCommand(name, emoji, commandInstance);
+                    new BotCommand(name, emoji, commandInstance, commandAnnotation.guildOnly());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

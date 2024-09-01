@@ -17,11 +17,12 @@ import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
-@Command(name = "hug", emoji = "🧸", guildOnly = true)
+@Command(name = "hug", emoji = "🧸", guildOnly = false)
 public class HugCommand extends CommandRuntime {
 
-    private final CooldownMap cooldown = new CooldownMap(60);
+    private final CooldownMap cooldown = new CooldownMap(TimeUnit.SECONDS.toMillis(60));
 
     @Override
     public SlashCommandData initCommand() {
@@ -34,26 +35,33 @@ public class HugCommand extends CommandRuntime {
     @Override
     public void run(SlashCommandInteractionEvent event) throws CommandException {
         final Member sender = event.getMember();
-
         final Member target = event.getOption("user", OptionMapping::getAsMember);
         if (target == null) {
             event.reply("Unfortunietly you can only hug people that are on that server! <:pandaCry:1279483498008285244>").setEphemeral(true).queue();
             return;
         }
 
+        if (cooldown.isOnCooldown(sender.getId() + "$" + target.getId())) {
+            event.reply(
+                    "You just hugged " + target.getAsMention() + " just a few seconds ago! Please wait " + cooldown.getCooldownSeconds(sender.getId() + "$" + target.getId()) + " seoncds! <:pandaCry:1279483498008285244>"
+            ).setEphemeral(true).queue();
+            return;
+        }
+
         Random random = new Random();
 
         event.replyEmbeds(
-                        Main.getNewEmbed()
-                                .setColor(Color.decode("#DE3B8F"))
-                                .setImage(pic.get(random.nextInt(0, pic.size())))
-                                .setDescription("**" + sender.getAsMention() + "** has just hugged **" + target.getAsMention() + "**!\n" +
-                                        "-# " + comment.get(random.nextInt(0, comment.size()))
-                                        .replace("%sender%", sender.getEffectiveName())
-                                        .replace("%target%", target.getEffectiveName())
-                                )
-                                .build()
-                ).queue();
+                Main.getNewEmbed(event.getGuild())
+                        .setImage(picture.get(random.nextInt(0, picture.size())))
+                        .setDescription("**" + sender.getAsMention() + "** has just hugged **" + target.getAsMention() + "**!\n" +
+                                "-# " + comment.get(random.nextInt(0, comment.size()))
+                                .replace("%sender%", sender.getEffectiveName())
+                                .replace("%target%", target.getEffectiveName())
+                        )
+                        .build()
+        ).queue();
+
+        cooldown.setCooldown(sender.getId() + "$" + target.getId(), -1);
     }
 
     List<String> comment = Arrays.asList(
@@ -76,7 +84,7 @@ public class HugCommand extends CommandRuntime {
             "%target%, hug back!"
     );
 
-    List<String> pic = Arrays.asList(
+    List<String> picture = Arrays.asList(
             "https://media.tenor.com/images/7d3a251e2d7bf9af9925137c37bc1a9d/tenor.gif",
             "https://pbs.twimg.com/media/EeLw9t8VAAAzxSi.jpg",
             "https://media.tenor.com/images/884f2d71fd9670f78da7287bc1568267/tenor.gif",

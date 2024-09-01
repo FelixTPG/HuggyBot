@@ -3,6 +3,8 @@ package eu.felixtpg.api.commands;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import net.dv8tion.jda.api.interactions.IntegrationType;
+import net.dv8tion.jda.api.interactions.InteractionContextType;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 
 @Getter
@@ -22,7 +24,7 @@ public class BotCommand {
     private SlashCommandData command;
     private CommandRuntime commandRuntime;
 
-    public BotCommand(String name, String emoji, CommandRuntime commandRuntime) {
+    public BotCommand(String name, String emoji, CommandRuntime commandRuntime, boolean guildOnly) {
         this.name = name;
         this.emoji = emoji;
 
@@ -31,10 +33,15 @@ public class BotCommand {
         } catch (Exception ignored) {
             ignored.printStackTrace();
         }
-        this.command
-                .setName(this.name);
-//                .setIntegrationTypes(integrationTypes)
-//                .setContexts(InteractionContextType.ALL);
+        this.command.setName(this.name);
+
+        if (guildOnly) {
+            this.command.setContexts(InteractionContextType.GUILD)
+                    .setIntegrationTypes(IntegrationType.GUILD_INSTALL);
+        } else {
+            this.command.setContexts(InteractionContextType.GUILD, InteractionContextType.PRIVATE_CHANNEL)
+                    .setIntegrationTypes(IntegrationType.ALL);
+        }
 
         this.commandRuntime = commandRuntime;
         Runner.addCommand(this);
