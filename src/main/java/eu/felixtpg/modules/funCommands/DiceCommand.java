@@ -26,7 +26,7 @@ public class DiceCommand extends CommandRuntime {
         event.replyEmbeds(
                         Main.getNewEmbed(event.getGuild())
                                 .setDescription("Du hast eine **" + dice + "🎲** gewürfelt!")
-                                .setImage("https://api.simplica.dev/image/dice/?size=" + dice)
+                                .setImage("https://api.simplica.dev/image/dice/?number=" + dice)
                                 .build()
                 ).queue();
     }
