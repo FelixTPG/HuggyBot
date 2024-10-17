@@ -101,8 +101,6 @@ public class Runner extends ListenerAdapter {
     }
 
     public void updateCommands() {
-        //LogManager.sendLog(Runner.class, "SETUP", "Initializing slash commands...");
-
         registerCommands();
 
         List<CommandData> finalCommandList = new ArrayList<>();
@@ -110,7 +108,7 @@ public class Runner extends ListenerAdapter {
             // define slash command data and set the name
             SlashCommandData finalCommand = botCommand.getCommand();
             if (finalCommand == null) return;
-            finalCommand.setName(botCommand.getName()).setGuildOnly(botCommand.isGuildOnly());
+            finalCommand.setName(botCommand.getName());
 
             // define the separators that should be added to the command descriptions
             final String descriptionSeparator = botCommand.getEmoji() + " - ";

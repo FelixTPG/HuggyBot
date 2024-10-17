@@ -9,13 +9,6 @@ import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
-import net.dv8tion.jda.api.utils.FileUpload;
-
-import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 
 @Command(name = "petpet", emoji = "🐾", guildOnly = false)
 public class PetPetCommand extends CommandRuntime {
@@ -37,29 +30,8 @@ public class PetPetCommand extends CommandRuntime {
 
         // get petpet gif and check if it isn't null
         String petpetURL = "https://memeado.vercel.app/api/petpet?image=" + event.getOption("user").getAsUser().getEffectiveAvatarUrl();
-
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(petpetURL))
-                .build();
-
-        byte[] petpetGif = null;
-
-        try {
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-            if (response != null || response.statusCode() == 200) {
-                petpetGif = response.body().getBytes();
-            }
-        } catch (IOException | InterruptedException e) {
-            throw new CommandException("An error occurred while fetching the petpet gif. Most likely the user's avatar is invalid.");
-        }
-
-        // Try uploading the gif and the user's avatar
-        FileUpload upload = FileUpload.fromData(petpetGif, "petpet.gif");
-        event.getHook().editOriginalAttachments(
-                upload
-        ).queue();
+        System.out.println(petpetURL);
+        event.getHook().editOriginal(petpetURL).queue();
     }
 
 }

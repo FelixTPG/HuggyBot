@@ -33,15 +33,15 @@ public class BotCommand {
         }
         this.command.setName(this.name);
 
-        if (guildOnly) {
-            System.out.println("Guild only command: " + this.name);
-            this.command.setIntegrationTypes(IntegrationType.ALL)
-                    .setContexts(InteractionContextType.GUILD);
-        } else {
+//        if (guildOnly) {
+//            System.out.println("Guild only command: " + this.name);
+//            this.command.setIntegrationTypes(IntegrationType.ALL)
+//                    .setContexts(InteractionContextType.GUILD);
+//        } else {
             System.out.println("Global command: " + this.name);
             this.command.setIntegrationTypes(IntegrationType.ALL)
                     .setContexts(InteractionContextType.ALL);
-        }
+//        }
 
         this.commandRuntime = commandRuntime;
         Runner.addCommand(this);

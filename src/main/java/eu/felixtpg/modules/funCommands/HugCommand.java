@@ -13,7 +13,6 @@ import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 
-import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -26,7 +25,7 @@ public class HugCommand extends CommandRuntime {
 
     @Override
     public SlashCommandData initCommand() {
-        return Commands.slash("hug", "Hug someone you really like!").setGuildOnly(true)
+        return Commands.slash("hug", "Hug someone you really like!")
                 .addOptions(
                         new OptionData(OptionType.USER, "user", "The user that you want to hug!", true)
                 );
