@@ -36,38 +36,18 @@ public class BotCommand {
         this.command.setName(this.name);
 
         if (guildOnly) {
-            this.command.setContexts(InteractionContextType.GUILD)
-                    .setIntegrationTypes(IntegrationType.GUILD_INSTALL);
+            System.out.println("Guild only command: " + this.name);
+            this.command.setIntegrationTypes(IntegrationType.ALL)
+                    .setContexts(InteractionContextType.GUILD);
         } else {
-            this.command.setContexts(InteractionContextType.GUILD, InteractionContextType.PRIVATE_CHANNEL)
-                    .setIntegrationTypes(IntegrationType.ALL);
+            System.out.println("Global command: " + this.name);
+            this.command.setIntegrationTypes(IntegrationType.ALL)
+                    .setContexts(InteractionContextType.ALL);
         }
 
         this.commandRuntime = commandRuntime;
         Runner.addCommand(this);
     }
-
-//    public BotCommand(String name, String emoji, CommandRuntime commandRuntime, Collection<IntegrationType> integrationTypes) {
-//        this.name = name;
-//        this.emoji = emoji;
-//
-//        this.command = commandRuntime.initCommand();
-//        this.command
-//                .setName(this.name)
-//                .setIntegrationTypes(integrationTypes)
-//                .setContexts(InteractionContextType.ALL);
-//
-//        this.commandRuntime = commandRuntime;
-//        Runner.addCommand(this);
-//    }
-//
-//    public SlashCommandData setContexts(InteractionContextType... interactionContextTypes) {
-//        return this.command.setContexts(interactionContextTypes);
-//    }
-//
-//    public SlashCommandData setContexts(Collection<InteractionContextType> interactionContextTypes) {
-//        return this.command.setContexts(interactionContextTypes);
-//    }
 
     public BotCommand setDescription(String string) {
         this.description = string;

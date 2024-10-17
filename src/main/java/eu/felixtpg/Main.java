@@ -46,6 +46,7 @@ public class Main {
 
         jda.awaitReady();
         logger.info("Started bot with " + jda.getGuilds().size() + " servers (Took " + ManagementFactory.getRuntimeMXBean().getUptime() + "ms)");
+
         updateActivity();
     }
 
