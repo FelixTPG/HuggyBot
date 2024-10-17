@@ -6,7 +6,7 @@
 
     <groupId>eu.felixtpg</groupId>
     <artifactId>HuggyBot</artifactId>
-    <version>v1.0-BETA</version>
+    <version>v1.1-BETA</version>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
