@@ -18,8 +18,6 @@ public class BotCommand {
     @Setter @Getter
     private boolean disabled;
 
-    private String textCommand;
-
     private boolean guildOnly;
     private SlashCommandData command;
     private CommandRuntime commandRuntime;
@@ -47,16 +45,6 @@ public class BotCommand {
 
         this.commandRuntime = commandRuntime;
         Runner.addCommand(this);
-    }
-
-    public BotCommand setDescription(String string) {
-        this.description = string;
-        return this;
-    }
-
-    public BotCommand setTextCommand(String textCommand) {
-        this.textCommand = textCommand;
-        return this;
     }
 
 }
