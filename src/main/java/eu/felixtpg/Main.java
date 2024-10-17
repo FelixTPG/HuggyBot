@@ -48,6 +48,17 @@ public class Main {
         logger.info("Started bot with " + jda.getGuilds().size() + " servers (Took " + ManagementFactory.getRuntimeMXBean().getUptime() + "ms)");
 
         updateActivity();
+
+        new Thread(() -> {
+            while (true)  {
+                Scanner scanner = new Scanner(System.in);
+                String input = scanner.nextLine();
+                if (input.equalsIgnoreCase("exit")) {
+                    getJda().shutdown();
+                    System.exit(0);
+                }
+            }
+        }).start();
     }
 
     private static void updateActivity() {
